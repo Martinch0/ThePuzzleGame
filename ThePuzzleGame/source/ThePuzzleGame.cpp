@@ -1,6 +1,7 @@
 #include "s3e.h"
 #include "IwDebug.h"
 #include "Iw2D.h"
+#include "input.h"
 
 
 // Main entry point for the application

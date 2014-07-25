@@ -1,1 +1,0 @@
-VC12;build_thepuzzlegame_vc12;

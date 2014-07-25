@@ -5,6 +5,8 @@ files
 	[source]
     (source)
     ThePuzzleGame.cpp
+	input.h
+	input.cpp
 }
 
 subprojects
