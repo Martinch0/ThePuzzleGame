@@ -1,0 +1,14 @@
+#!/usr/bin/env mkb
+files
+{
+    ThePuzzleGame.cpp
+}
+
+subprojects
+{
+    iwutil
+}
+
+deployment
+{
+}
