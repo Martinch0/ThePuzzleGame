@@ -1,14 +1,23 @@
 #!/usr/bin/env mkb
+
 files
 {
+	[source]
+    (source)
     ThePuzzleGame.cpp
 }
 
 subprojects
 {
     iwutil
+    iw2d
 }
 
 deployment
 {
+}
+#### AUTO GENERATED deployment settings from DeployTool.exe. Do not edit below this line ####
+deployments
+{
+	["Default"]
 }
