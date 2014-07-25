@@ -23,7 +23,7 @@ int main()
 		Iw2DSurfaceShow();
 
         // Sleep for 0ms to allow the OS to process events etc.
-        s3eDeviceYield(10);
+        s3eDeviceYield(20);
     }
 
     //Terminate modules being used
