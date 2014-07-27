@@ -1,4 +1,5 @@
-class Puzzle {
+class Puzzle
+{
 private:
 	int *field;
 	int *fieldPrev;
@@ -6,17 +7,8 @@ private:
 	char *s;
 	int cs = 0;
 public:
-	Puzzle(int moves) {
-		this->field = new int[64];
-		this->fieldPrev = new int[64];
-		this->moves = moves;
-		s = new char[64];
-	}
-
-	~Puzzle() {
-
-	}
-
+	Puzzle(int moves);
+	~Puzzle();
 	void generate(int seed);
 	void printAsMatrix();
 	void printLine();
