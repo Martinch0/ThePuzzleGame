@@ -16,6 +16,13 @@ int main()
     //Initialise graphics system(s)
 	Iw2DInit();
 
+
+	// I would like to create some random
+	// messages here
+	// to test how the conflicts work in github.
+
+
+
 	//Create scene manager
 	g_pSceneManager = new SceneManager();
 
