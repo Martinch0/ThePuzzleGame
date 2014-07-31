@@ -4,6 +4,7 @@
 #include "input.h"
 #include "scene.h"
 #include "mainMenu.h"
+#include "resources.h"
 
 #define FRAMES_PER_SECOND 30.0f
 #define FRAME_TIME (1.0f / FRAMES_PER_SECOND)
@@ -16,12 +17,8 @@ int main()
     //Initialise graphics system(s)
 	Iw2DInit();
 
-
-	// I would like to create some random
-	// messages here
-	// to test how the conflicts work in github.
-
-
+	//Create resources
+	g_pResources = new Resources();
 
 	//Create scene manager
 	g_pSceneManager = new SceneManager();
@@ -76,6 +73,7 @@ int main()
     //Terminate modules being used
 	delete g_Input;
 	delete g_pSceneManager;
+	delete g_pResources;
 	Iw2DTerminate();
     
     // Return
