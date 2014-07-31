@@ -1,7 +1,7 @@
 #ifndef __RESOURCES_H__
 #define __RESOURCES_H__
 
-#define MAX_ELEMENT_TYPES 4
+#define MAX_ELEMENT_TYPES 5
 
 #include "Iw2D.h"
 #include "Iw2DSceneGraph.h"
@@ -12,7 +12,6 @@ class Resources
 {
 protected:
 	CIw2DImage** Element;
-	CIw2DImage* ElementDestroyed;
 	CIw2DImage* MenuBG;
 	CIw2DImage* GameBG;
 	CIw2DImage* PlayButton;
@@ -20,7 +19,6 @@ protected:
 
 public:
 	CIw2DImage** getElement();
-	CIw2DImage* getElementDestroyed();
 	CIw2DImage* getMenuBG();
 	CIw2DImage* getGameBG();
 	CIw2DImage* getPlayButton();

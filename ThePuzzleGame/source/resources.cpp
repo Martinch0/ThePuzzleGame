@@ -6,13 +6,12 @@ Resources::Resources()
 {
 	//Load images
 	
-	Element = new CIw2DImage*[MAX_ELEMENT_TYPES - 1];
-	Element[0] = Iw2DCreateImage("textures/ballblue.png");
-	Element[1] = Iw2DCreateImage("textures/ballpurple.png");
-	Element[2] = Iw2DCreateImage("textures/ballred.png");
-	Element[3] = Iw2DCreateImage("textures/ballyellow.png");
-
-	ElementDestroyed = Iw2DCreateImage("textures/balldestroyed.png");
+	Element = new CIw2DImage*[MAX_ELEMENT_TYPES];
+	Element[0] = Iw2DCreateImage("textures/balldestroyed.png");
+	Element[1] = Iw2DCreateImage("textures/ballblue.png");
+	Element[2] = Iw2DCreateImage("textures/ballpurple.png");
+	Element[3] = Iw2DCreateImage("textures/ballred.png");
+	Element[4] = Iw2DCreateImage("textures/ballyellow.png");
 
 	MenuBG = Iw2DCreateImage("textures/backgroundMenu.png");
 	GameBG = Iw2DCreateImage("textures/backgroundGame.png");
@@ -32,11 +31,10 @@ Resources::~Resources()
 		delete Element[i];
 	}
 	delete[] Element;
-	delete ElementDestroyed;
 	delete MenuBG;
 	delete GameBG;
 	delete PlayButton;
-	for (int i = 0; i < MAX_ELEMENT_TYPES; i++)
+	for (int i = 0; i < MAX_ELEMENT_TYPES - 1; i++)
 	{
 		delete ElementButton[i];
 	}
@@ -46,11 +44,6 @@ Resources::~Resources()
 CIw2DImage** Resources::getElement()
 {
 	return Element;
-}
-
-CIw2DImage* Resources::getElementDestroyed()
-{
-	return ElementDestroyed;
 }
 
 CIw2DImage* Resources::getMenuBG()
