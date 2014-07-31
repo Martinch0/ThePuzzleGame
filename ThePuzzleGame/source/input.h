@@ -9,6 +9,9 @@ private:
 	bool m_Touched;
 	bool m_PrevTouched;
 public:
+	int GetX() const;
+	int GetY() const;
+public:
 	Input();
 
 	/**

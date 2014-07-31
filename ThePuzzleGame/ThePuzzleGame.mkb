@@ -2,19 +2,25 @@
 
 files
 {
-	[source]
+    [source]
     (source)
     ThePuzzleGame.cpp
-	input.h
-	input.cpp
-	Puzzle.cpp
-	Puzzle.h
+    input.cpp
+    input.h
+    Puzzle.cpp
+    Puzzle.h
+    mainMenu.cpp
+    mainMenu.h
+    scene.cpp
+    scene.h
 }
 
 subprojects
 {
     iwutil
     iw2d
+    iw2dscenegraph
+    iw2dscenegraphcore
 }
 
 deployment

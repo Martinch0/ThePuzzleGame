@@ -2,6 +2,7 @@
 
 Input* g_Input = NULL;
 
+
 Input::Input() : m_Touched(false), m_PrevTouched(false)
 {
 	if (s3ePointerGetInt(S3E_POINTER_MULTI_TOUCH_AVAILABLE) != 0)
@@ -63,4 +64,13 @@ void Input::OnMultiTouchDragCallback(s3ePointerTouchMotionEvent* event)
 {
 	g_Input->m_x = event->m_x;
 	g_Input->m_y = event->m_y;
+}
+
+int Input::GetX() const
+{
+	return m_x;
+}
+int Input::GetY() const
+{
+	return m_y;
 }
