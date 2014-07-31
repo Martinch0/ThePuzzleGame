@@ -69,6 +69,7 @@ int main()
     //Terminate modules being used
 	delete g_Input;
 	delete g_pSceneManager;
+	delete g_pResources;
 	Iw2DTerminate();
     
     // Return

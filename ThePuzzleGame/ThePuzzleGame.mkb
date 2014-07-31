@@ -13,6 +13,8 @@ files
     mainMenu.h
     scene.cpp
     scene.h
+    resources.cpp
+    resources.h
 }
 
 subprojects
@@ -21,6 +23,12 @@ subprojects
     iw2d
     iw2dscenegraph
     iw2dscenegraphcore
+}
+
+assets
+{
+    (data)
+    textures
 }
 
 deployment
