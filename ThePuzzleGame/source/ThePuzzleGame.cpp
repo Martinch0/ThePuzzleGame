@@ -4,6 +4,7 @@
 #include "input.h"
 #include "scene.h"
 #include "mainMenu.h"
+#include "resources.h"
 
 #define FRAMES_PER_SECOND 30.0f
 #define FRAME_TIME (1.0f / FRAMES_PER_SECOND)
@@ -15,6 +16,9 @@ int main()
 {
     //Initialise graphics system(s)
 	Iw2DInit();
+
+	//Create resources
+	g_pResources = new Resources();
 
 	//Create scene manager
 	g_pSceneManager = new SceneManager();
