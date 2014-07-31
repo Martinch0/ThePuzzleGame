@@ -44,8 +44,7 @@ int main()
 		frame_start_time = s3eTimerGetMs();
 
         //Update the input systems
-        s3eKeyboardUpdate();
-        s3ePointerUpdate();
+		g_Input->Update();
 
 		//Update scene manager
 		g_pSceneManager->Update(FRAME_TIME);
