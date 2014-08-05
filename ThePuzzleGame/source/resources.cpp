@@ -41,9 +41,14 @@ Resources::~Resources()
 	delete[] ElementButton;
 }
 
-CIw2DImage** Resources::getElement()
+CIw2DImage** Resources::getElements()
 {
 	return Element;
+}
+
+CIw2DImage* Resources::getElement(int p)
+{
+	return Element[p];
 }
 
 CIw2DImage* Resources::getMenuBG()

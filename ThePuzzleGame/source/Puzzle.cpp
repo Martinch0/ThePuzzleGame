@@ -52,11 +52,6 @@ void Puzzle::readField(char **f)
 	}
 }
 
-int Puzzle::getIndex(int x, int y)
-{
-	return y * this->size_X + x;
-}
-
 Puzzle::Puzzle(char *f)
 {
 	loadFromString(f);
@@ -177,6 +172,21 @@ char* Puzzle::getAsString()
 	r[i] = 0;
 
 	return r;
+}
+
+int Puzzle::getSizeX()
+{
+	return this->size_X;
+}
+
+int Puzzle::getSizeY()
+{
+	return this->size_Y;
+}
+
+int Puzzle::getIndex(int x, int y)
+{
+	return y * this->size_X + x;
 }
 
 void Puzzle::printAsMatrix()

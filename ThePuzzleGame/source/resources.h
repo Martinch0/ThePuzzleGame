@@ -18,7 +18,8 @@ protected:
 	CIw2DImage** ElementButton;
 
 public:
-	CIw2DImage** getElement();
+	CIw2DImage** getElements();
+	CIw2DImage* getElement(int p);
 	CIw2DImage* getMenuBG();
 	CIw2DImage* getGameBG();
 	CIw2DImage* getPlayButton();

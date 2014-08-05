@@ -11,6 +11,8 @@ files
     Puzzle.h
     mainMenu.cpp
     mainMenu.h
+	field.cpp
+	field.h
     scene.cpp
     scene.h
     resources.cpp

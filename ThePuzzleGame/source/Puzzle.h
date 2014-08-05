@@ -40,8 +40,6 @@ private:
 	// Reads a field information from a string with the size of the initialized array.
 	void readField(char **f);
 
-	// Returns the index of element in position XxY
-	int getIndex(int x, int y);
 public:
 
 	// Initialize a Puzzle from a string
@@ -65,6 +63,15 @@ public:
 
 	// Encode the current puzzle as a string.
 	char* getAsString();
+
+	// Return the X size of the field
+	int getSizeX();
+
+	// Return the Y size of the field
+	int getSizeY();
+
+	// Returns the index of element in position XxY
+	int getIndex(int x, int y);
 
 	// Print the field to the standard output as a matrix.
 	void printAsMatrix();

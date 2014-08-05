@@ -4,6 +4,7 @@
 #include "input.h"
 #include "scene.h"
 #include "mainMenu.h"
+#include "field.h"
 #include "resources.h"
 
 #define FRAMES_PER_SECOND 30.0f
@@ -32,9 +33,16 @@ int main()
 	main_menu->Init();
 	g_pSceneManager->Add(main_menu);
 
-	//Init the game
+	// Init the field
+	Field* field = new Field();
+	field->SetName("field");
+	// Creates random puzzle
+	Puzzle *p = new Puzzle(7, 7, 10);
+	p->generateRandom(4);
+	field->Init(p);
+	g_pSceneManager->Add(field);
 
-	//Switch to the main menu
+	// Switch to the main menu
 	g_pSceneManager->SwitchTo(main_menu);
 
 	// Initialize variables for Frame Rate control
