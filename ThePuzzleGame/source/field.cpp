@@ -1,28 +1,40 @@
 #include "field.h"
+#include <iostream>
 
 void Field::updateField(bool initial)
 {
+	int element_size = g_pResources->getElement(p->getElement(0, 0))->GetWidth();
+	int field_padding = element_size / 5;
+
+	float scale = IwGxGetScreenWidth() / ORIG_WIDTH;
+
 	int max_x = p->getSizeX();
 	int max_y = p->getSizeY();
+
+	int left_padding = (ORIG_WIDTH - (max_x * element_size + field_padding * (max_x - 1)))/2;
+	int top_padding = 50;
 	for (int y = 0; y < max_y; y++)
 	{
 		for (int x = 0; x < max_x; x++)
 		{
+			CSprite *tmp;
 			if (initial)
 			{
-				CSprite *tmp = new CSprite();
+				tmp = new CSprite();
 				tmp->SetImage(g_pResources->getElement(p->getElement(x, y)));
-				tmp->m_X = x * tmp->GetImage()->GetWidth();
-				tmp->m_Y = y * tmp->GetImage()->GetHeight();
-				tmp->m_W = tmp->GetImage()->GetWidth();
-				tmp->m_H = tmp->GetImage()->GetHeight();
 				this->field[p->getIndex(x, y)] = tmp;
 				AddChild(tmp);
 			}
 			else
 			{
-
+				tmp = this->field[p->getIndex(x, y)];
 			}
+			tmp->m_X = (left_padding + x * (tmp->GetImage()->GetWidth() + field_padding)) * scale;
+			tmp->m_Y = (top_padding + y * (tmp->GetImage()->GetHeight() + field_padding)) * scale;
+			tmp->m_W = tmp->GetImage()->GetWidth() * scale;
+			tmp->m_H = tmp->GetImage()->GetHeight() * scale;
+			tmp->m_ScaleX = scale;
+			tmp->m_ScaleY = scale;
 		}
 	}
 }
@@ -72,6 +84,8 @@ void Field::Update(float deltaTime, float alphaMul)
 	{
 		return;
 	}
+
+	updateField(false);
 
 	Scene::Update(deltaTime, alphaMul);
 }

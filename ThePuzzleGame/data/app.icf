@@ -18,3 +18,4 @@
 
 [S3E]
 MemSize = 20000000
+DispFixRot=FixedPortrait

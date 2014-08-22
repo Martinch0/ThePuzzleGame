@@ -3,6 +3,10 @@
 
 #include <list>
 #include "Iw2DSceneGraph.h"
+#include "IwGx.h"
+
+#define ORIG_WIDTH 640.0f
+#define ORIG_HEIGHT 800.0f
 
 using namespace Iw2DSceneGraphCore;
 using namespace Iw2DSceneGraph;

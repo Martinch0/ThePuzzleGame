@@ -8,10 +8,10 @@ Resources::Resources()
 	
 	Element = new CIw2DImage*[MAX_ELEMENT_TYPES];
 	Element[0] = Iw2DCreateImage("textures/balldestroyed.png");
-	Element[1] = Iw2DCreateImage("textures/ballblue.png");
-	Element[2] = Iw2DCreateImage("textures/ballpurple.png");
-	Element[3] = Iw2DCreateImage("textures/ballred.png");
-	Element[4] = Iw2DCreateImage("textures/ballyellow.png");
+	Element[1] = Iw2DCreateImage("textures/glass-sd.png");
+	Element[2] = Iw2DCreateImage("textures/rock-sd.png");
+	Element[3] = Iw2DCreateImage("textures/metal-sd.png");
+	Element[4] = Iw2DCreateImage("textures/wood-sd.png");
 
 	MenuBG = Iw2DCreateImage("textures/backgroundMenu.png");
 	GameBG = Iw2DCreateImage("textures/backgroundGame.png");
