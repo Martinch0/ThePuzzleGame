@@ -18,10 +18,10 @@ Resources::Resources()
 	PlayButton = Iw2DCreateImage("textures/buttonPlay.png");
 	
 	ElementButton = new CIw2DImage*[MAX_ELEMENT_TYPES - 1];
-	ElementButton[0] = Iw2DCreateImage("textures/buttonblue.png");
-	ElementButton[1] = Iw2DCreateImage("textures/buttonpurple.png");
-	ElementButton[2] = Iw2DCreateImage("textures/buttonred.png");
-	ElementButton[3] = Iw2DCreateImage("textures/buttonyellow.png");
+	ElementButton[0] = Iw2DCreateImage("textures/buttonglass.png");
+	ElementButton[1] = Iw2DCreateImage("textures/buttonrock.png");
+	ElementButton[2] = Iw2DCreateImage("textures/buttonmetal.png");
+	ElementButton[3] = Iw2DCreateImage("textures/buttonwood.png");
 }
 
 Resources::~Resources()
@@ -66,7 +66,12 @@ CIw2DImage* Resources::getPlayButton()
 	return PlayButton;
 }
 
-CIw2DImage** Resources::getElementButton()
+CIw2DImage* Resources::getElementButton(int p)
+{
+	return ElementButton[p];
+}
+
+CIw2DImage** Resources::getElementButtons()
 {
 	return ElementButton;
 }

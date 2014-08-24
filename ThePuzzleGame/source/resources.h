@@ -23,7 +23,8 @@ public:
 	CIw2DImage* getMenuBG();
 	CIw2DImage* getGameBG();
 	CIw2DImage* getPlayButton();
-	CIw2DImage** getElementButton();
+	CIw2DImage* getElementButton(int p);
+	CIw2DImage** getElementButtons();
 
 public:
 	Resources();
