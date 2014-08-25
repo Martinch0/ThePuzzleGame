@@ -27,6 +27,9 @@ private:
 
 	// Deletes all elements related to the buttons
 	void deleteButtons();
+
+	// Handles all input for the current scene.
+	void checkForInput();
 public:
 	Field();
 	~Field();

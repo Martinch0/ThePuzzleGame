@@ -21,14 +21,14 @@ void Field::updateField(bool initial)
 			if (initial)
 			{
 				this->field[p->getIndex(x, y)] = new CSprite();
-				this->field[p->getIndex(x, y)]->SetImage(g_pResources->getElement(p->getElement(x, y)));
 				AddChild(this->field[p->getIndex(x, y)]);
 			}
 			tmp = this->field[p->getIndex(x, y)];
+			tmp->SetImage(g_pResources->getElement(p->getElement(x, y)));
 			tmp->m_X = (left_padding + x * (tmp->GetImage()->GetWidth() + field_padding)) * scale;
 			tmp->m_Y = (top_padding + y * (tmp->GetImage()->GetHeight() + field_padding)) * scale;
-			tmp->m_W = tmp->GetImage()->GetWidth() * scale;
-			tmp->m_H = tmp->GetImage()->GetHeight() * scale;
+			tmp->m_W = tmp->GetImage()->GetWidth();
+			tmp->m_H = tmp->GetImage()->GetHeight();
 			tmp->m_ScaleX = scale;
 			tmp->m_ScaleY = scale;
 		}
@@ -69,8 +69,8 @@ void Field::updateButtons(bool initial)
 		}
 		tmp->m_X = (left_padding + i * (element_size + padding)) * scale;
 		tmp->m_Y = BUTTONS_TOP_PADDING * scale;
-		tmp->m_W = tmp->GetImage()->GetWidth() * scale;
-		tmp->m_H = tmp->GetImage()->GetHeight() * scale;
+		tmp->m_W = tmp->GetImage()->GetWidth();
+		tmp->m_H = tmp->GetImage()->GetHeight();
 		tmp->m_ScaleX = scale;
 		tmp->m_ScaleY = scale;
 	}
@@ -81,6 +81,22 @@ void Field::deleteButtons()
 	if (this->field_size != 0)
 	{
 		delete[] this->buttons;
+	}
+}
+
+void Field::checkForInput()
+{
+	//Detect screen tap
+	if (m_IsInputActive && m_Manager->GetCurrent() == this && g_Input->isClick())
+	{
+		g_Input->Reset();
+		for (int i = 0; i < BUTTONS_NUMBER; i++)
+		{
+			if (this->buttons[i]->HitTest(g_Input->GetX(), g_Input->GetY()))
+			{
+				this->p->removeColorFromStart(i+1);
+			}
+		}
 	}
 }
 
@@ -139,6 +155,8 @@ void Field::Update(float deltaTime, float alphaMul)
 
 	updateField();
 	updateButtons();
+
+	checkForInput();
 
 	Scene::Update(deltaTime, alphaMul);
 }

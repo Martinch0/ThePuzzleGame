@@ -306,6 +306,12 @@ void Puzzle::removeColor(int x, int y, int el, bool* visited)
 	}
 }
 
+void Puzzle::removeColorFromStart(int el)
+{
+	bool v[64] = { false };
+	this->removeColor(this->start_X, this->start_Y, el, v);
+}
+
 Puzzle* Puzzle::createCopy(int moves, int currentMove)
 {
 	Puzzle *p = new Puzzle(this->size_X, this->size_Y, moves);

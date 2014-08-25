@@ -106,6 +106,9 @@ public:
 	// Removes all elements that are "visible" from position XxY and are from type el.
 	void removeColor(int x, int y, int el, bool* visited);
 
+	// Removes all elements that are "visible" from the start position and are from type el. 
+	void removeColorFromStart(int el);
+
 	// Creates a copy of the current Puzzle.
 	Puzzle* createCopy(int moves, int currentMove);
 
