@@ -20,15 +20,11 @@ void Field::updateField(bool initial)
 			CSprite *tmp;
 			if (initial)
 			{
-				tmp = new CSprite();
-				tmp->SetImage(g_pResources->getElement(p->getElement(x, y)));
-				this->field[p->getIndex(x, y)] = tmp;
-				AddChild(tmp);
+				this->field[p->getIndex(x, y)] = new CSprite();
+				this->field[p->getIndex(x, y)]->SetImage(g_pResources->getElement(p->getElement(x, y)));
+				AddChild(this->field[p->getIndex(x, y)]);
 			}
-			else
-			{
-				tmp = this->field[p->getIndex(x, y)];
-			}
+			tmp = this->field[p->getIndex(x, y)];
 			tmp->m_X = (left_padding + x * (tmp->GetImage()->GetWidth() + field_padding)) * scale;
 			tmp->m_Y = (top_padding + y * (tmp->GetImage()->GetHeight() + field_padding)) * scale;
 			tmp->m_W = tmp->GetImage()->GetWidth() * scale;
@@ -36,6 +32,55 @@ void Field::updateField(bool initial)
 			tmp->m_ScaleX = scale;
 			tmp->m_ScaleY = scale;
 		}
+	}
+}
+
+void Field::deleteField()
+{
+	if (this->field_size != 0)
+	{
+		delete[] this->field;
+	}
+}
+
+void Field::updateButtons(bool initial)
+{
+
+	int element_size = g_pResources->getElementButton(0)->GetWidth();
+	int padding = element_size / 10;
+	int left_padding = (ORIG_WIDTH - ((element_size + padding) * BUTTONS_NUMBER - padding)) / 2;
+
+	float scale = IwGxGetScreenWidth() / ORIG_WIDTH;
+
+	for (int i = 0; i < BUTTONS_NUMBER; i++)
+	{
+
+		CSprite *tmp;
+		if (initial)
+		{
+			tmp = new CSprite();
+			tmp->SetImage(g_pResources->getElementButton(i));
+			this->buttons[i] = tmp;
+			AddChild(tmp);
+		}
+		else
+		{
+			tmp = this->buttons[i];
+		}
+		tmp->m_X = (left_padding + i * (element_size + padding)) * scale;
+		tmp->m_Y = BUTTONS_TOP_PADDING * scale;
+		tmp->m_W = tmp->GetImage()->GetWidth() * scale;
+		tmp->m_H = tmp->GetImage()->GetHeight() * scale;
+		tmp->m_ScaleX = scale;
+		tmp->m_ScaleY = scale;
+	}
+}
+
+void Field::deleteButtons()
+{
+	if (this->field_size != 0)
+	{
+		delete[] this->buttons;
 	}
 }
 
@@ -51,10 +96,10 @@ Field::~Field()
 void Field::Init(Puzzle *p)
 {
 	Scene::Init();
-
+	
 	// Save the pointer to the Puzzle
 	this->p = p;
-
+	
 	// Initialize the field array
 	int square = p->getSizeX() * p->getSizeY();
 	this->field_size = 2;
@@ -63,18 +108,25 @@ void Field::Init(Puzzle *p)
 		this->field_size *= 2;
 	}
 	this->field = new CSprite*[this->field_size];
+	for (int i = 0; i < this->field_size; i++)
+		this->field[i] = NULL;
+	this->buttons = new CSprite*[BUTTONS_NUMBER];
 
 	// Do a first update on the field.
 	this->updateField(true);
+
+	// Add the buttons to the scene.
+	this->updateButtons(true);
 }
 
 void Field::Exit()
 {
 	if (this->field_size != 0)
 	{
+		delete this->p;
+		this->deleteField();
+		this->deleteButtons();
 		this->field_size = 0;
-		delete p;
-		delete field;
 	}
 }
 
@@ -85,7 +137,8 @@ void Field::Update(float deltaTime, float alphaMul)
 		return;
 	}
 
-	updateField(false);
+	updateField();
+	updateButtons();
 
 	Scene::Update(deltaTime, alphaMul);
 }
