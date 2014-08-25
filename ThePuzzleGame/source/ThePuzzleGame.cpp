@@ -4,6 +4,7 @@
 #include "input.h"
 #include "scene.h"
 #include "mainMenu.h"
+#include "howToPlay.h"
 #include "field.h"
 #include "resources.h"
 
@@ -41,6 +42,12 @@ int main()
 	p->generateRandom(4);
 	field->Init(p);
 	g_pSceneManager->Add(field);
+
+	//Init the howToPlay
+	HowToPlay* howToPlay = new HowToPlay();
+	howToPlay->SetName("howtoplay");
+	howToPlay->Init();
+	g_pSceneManager->Add(howToPlay);
 
 	// Switch to the main menu
 	g_pSceneManager->SwitchTo(main_menu);

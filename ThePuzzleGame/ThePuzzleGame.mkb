@@ -17,6 +17,8 @@ files
     scene.h
     resources.cpp
     resources.h
+	howToPlay.cpp
+	howToPlay.h
 }
 
 subprojects

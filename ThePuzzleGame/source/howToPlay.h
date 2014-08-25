@@ -1,15 +1,14 @@
 #include "scene.h"
 
-class MainMenu : public Scene
+class HowToPlay : public Scene
 {
 protected:
 	//UI Components
-	CSprite* playButton;
-	CSprite* howToPlayButton;
+	CSprite* backButton;
 
 public:
-	MainMenu();
-	~MainMenu();
+	HowToPlay();
+	~HowToPlay();
 
 	//Initialise the menu
 	void Init();

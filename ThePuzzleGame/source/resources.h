@@ -15,6 +15,8 @@ protected:
 	CIw2DImage* MenuBG;
 	CIw2DImage* GameBG;
 	CIw2DImage* PlayButton;
+	CIw2DImage* HowToPlayButton;
+	CIw2DImage* BackButton;
 	CIw2DImage** ElementButton;
 
 public:
@@ -23,6 +25,8 @@ public:
 	CIw2DImage* getMenuBG();
 	CIw2DImage* getGameBG();
 	CIw2DImage* getPlayButton();
+	CIw2DImage* getHowToPlayButton();
+	CIw2DImage* getBackButton();
 	CIw2DImage* getElementButton(int p);
 	CIw2DImage** getElementButtons();
 

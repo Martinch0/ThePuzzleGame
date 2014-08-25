@@ -39,9 +39,22 @@ void MainMenu::Init()
 	playButton->m_H = playButton->GetImage()->GetHeight();
 	playButton->m_AnchorX = 0.5f;
 	playButton->m_AnchorY = 0.5f;
-	playButton->m_ScaleX = 1.5f;
-	playButton->m_ScaleY = 1.5f;
+	playButton->m_ScaleX = 0.3f;
+	playButton->m_ScaleY = 0.3f;
 	AddChild(playButton);
+
+	//Create HowToPlay Button
+	howToPlayButton = new CSprite();
+	howToPlayButton->SetImage(g_pResources->getHowToPlayButton());
+	howToPlayButton->m_X = IwGxGetScreenWidth() / 2.0f;
+	howToPlayButton->m_Y = y_pos + (playButton->GetImage()->GetHeight() * playButton->m_ScaleY);
+	howToPlayButton->m_W = howToPlayButton->GetImage()->GetWidth();
+	howToPlayButton->m_H = howToPlayButton->GetImage()->GetHeight();
+	howToPlayButton->m_AnchorX = 0.5f;
+	howToPlayButton->m_AnchorY = 0.5f;
+	howToPlayButton->m_ScaleX = 0.3f;
+	howToPlayButton->m_ScaleY = 0.3f;
+	AddChild(howToPlayButton);
 }
 
 void MainMenu::Update(float deltaTime, float alphaMul)
@@ -60,7 +73,13 @@ void MainMenu::Update(float deltaTime, float alphaMul)
 		if (playButton->HitTest(g_Input->GetX(), g_Input->GetY()))
 		{
 			//Switch to game scene
-			//for now just a test
+			g_pSceneManager->SwitchTo(g_pSceneManager->Find("field"));
+		}
+
+		if (howToPlayButton->HitTest(g_Input->GetX(), g_Input->GetY()))
+		{
+			//Switch to HowToPlay scene
+			g_pSceneManager->SwitchTo(g_pSceneManager->Find("howtoplay"));
 		}
 	}
 }

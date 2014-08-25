@@ -16,6 +16,8 @@ Resources::Resources()
 	MenuBG = Iw2DCreateImage("textures/backgroundMenu.png");
 	GameBG = Iw2DCreateImage("textures/backgroundGame.png");
 	PlayButton = Iw2DCreateImage("textures/buttonPlay.png");
+	HowToPlayButton = Iw2DCreateImage("textures/buttonHowToPlay.png");
+	BackButton = Iw2DCreateImage("textures/buttonBack.png");
 	
 	ElementButton = new CIw2DImage*[MAX_ELEMENT_TYPES - 1];
 	ElementButton[0] = Iw2DCreateImage("textures/buttonglass.png");
@@ -34,6 +36,8 @@ Resources::~Resources()
 	delete MenuBG;
 	delete GameBG;
 	delete PlayButton;
+	delete HowToPlayButton;
+	delete BackButton;
 	for (int i = 0; i < MAX_ELEMENT_TYPES - 1; i++)
 	{
 		delete ElementButton[i];
@@ -64,6 +68,16 @@ CIw2DImage* Resources::getGameBG()
 CIw2DImage* Resources::getPlayButton()
 {
 	return PlayButton;
+}
+
+CIw2DImage* Resources::getHowToPlayButton()
+{
+	return HowToPlayButton;
+}
+
+CIw2DImage* Resources::getBackButton()
+{
+	return BackButton;
 }
 
 CIw2DImage* Resources::getElementButton(int p)

@@ -97,15 +97,15 @@ void SceneManager::SwitchTo(Scene* scene)
 	else
 	{
 		//Activate and make visible the new scene
-		m_Current = m_Next;
-		m_Current->SetActive(true);
-		m_Current->m_IsVisible = true;
-		m_Current->SetInputActive(true);
+		m_Next->SetActive(true);
+		m_Next->SetInputActive(true);
+		m_Next->SetActive(true);
+		m_Next->m_IsVisible = true;
 		//Deactivate and hide the old scene
 		m_Current->SetInputActive(false);
 		m_Current->SetActive(false);
 		m_Current->m_IsVisible = false;
-		m_Current->SetInputActive(false);
+		m_Current = m_Next;
 		m_Next = 0;
 	}
 }
