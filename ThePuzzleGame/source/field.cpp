@@ -12,7 +12,6 @@ void Field::updateField(bool initial)
 	int max_y = p->getSizeY();
 
 	int left_padding = (ORIG_WIDTH - (max_x * element_size + field_padding * (max_x - 1)))/2;
-	int top_padding = 50;
 	for (int y = 0; y < max_y; y++)
 	{
 		for (int x = 0; x < max_x; x++)
@@ -26,7 +25,7 @@ void Field::updateField(bool initial)
 			tmp = this->field[p->getIndex(x, y)];
 			tmp->SetImage(g_pResources->getElement(p->getElement(x, y)));
 			tmp->m_X = (left_padding + x * (tmp->GetImage()->GetWidth() + field_padding)) * scale;
-			tmp->m_Y = (top_padding + y * (tmp->GetImage()->GetHeight() + field_padding)) * scale;
+			tmp->m_Y = (FIELD_TOP_PADDING + y * (tmp->GetImage()->GetHeight() + field_padding)) * scale;
 			tmp->m_W = tmp->GetImage()->GetWidth();
 			tmp->m_H = tmp->GetImage()->GetHeight();
 			tmp->m_ScaleX = scale;
@@ -52,10 +51,11 @@ void Field::updateButtons(bool initial)
 
 	float scale = IwGxGetScreenWidth() / ORIG_WIDTH;
 
+	CSprite *tmp;
+
+	// Add element buttons
 	for (int i = 0; i < BUTTONS_NUMBER; i++)
 	{
-
-		CSprite *tmp;
 		if (initial)
 		{
 			tmp = new CSprite();
@@ -74,6 +74,31 @@ void Field::updateButtons(bool initial)
 		tmp->m_ScaleX = scale;
 		tmp->m_ScaleY = scale;
 	}
+
+	// Add top buttons
+	if (initial)
+	{
+		pauseButton = new CSprite();
+		pauseButton->SetImage(g_pResources->getPauseButton());
+		AddChild(pauseButton);
+		restartButton = new CSprite();
+		restartButton->SetImage(g_pResources->getRestartButton());
+		AddChild(restartButton);
+
+	}
+	pauseButton->m_X = 0 * scale;
+	pauseButton->m_Y = 0 * scale;
+	pauseButton->m_W = pauseButton->GetImage()->GetWidth();
+	pauseButton->m_H = pauseButton->GetImage()->GetHeight();
+	pauseButton->m_ScaleX = scale;
+	pauseButton->m_ScaleY = scale;
+
+	restartButton->m_X = 150 * scale;
+	restartButton->m_Y = 0 * scale;
+	restartButton->m_W = restartButton->GetImage()->GetWidth();
+	restartButton->m_H = restartButton->GetImage()->GetHeight();
+	restartButton->m_ScaleX = scale;
+	restartButton->m_ScaleY = scale;
 }
 
 void Field::deleteButtons()
@@ -84,18 +109,53 @@ void Field::deleteButtons()
 	}
 }
 
+void Field::updateScore(bool initial)
+{
+	float scale = IwGxGetScreenWidth() / ORIG_WIDTH;
+
+	if (initial)
+	{
+		this->turnsLeft = new CLabel();
+		this->turnsLeft->m_X = 300 * scale;
+		this->turnsLeft->m_Y = 10 * scale;
+		this->turnsLeft->m_H = 30 * scale;
+		this->turnsLeft->m_W = 500 * scale;
+		this->turnsLeft->m_AlignHor = IW_2D_FONT_ALIGN_LEFT;
+		this->turnsLeft->m_AlignVer = IW_2D_FONT_ALIGN_TOP;
+		this->turnsLeft->m_Font = g_pResources->getFont();
+		this->turnsLeft->m_ScaleX = scale;
+		this->turnsLeft->m_ScaleY = scale;
+		AddChild(this->turnsLeft);
+	}
+	char str[16];
+	snprintf(str, 16, "Turns left: %d", this->p->getTurnsLeft());
+	this->turnsLeft->m_Text = str;
+}
+
 void Field::checkForInput()
 {
 	//Detect screen tap
 	if (m_IsInputActive && m_Manager->GetCurrent() == this && g_Input->isClick())
 	{
 		g_Input->Reset();
-		for (int i = 0; i < BUTTONS_NUMBER; i++)
+
+		// handle input relatively to the current state of the game.
+		switch (this->state)
 		{
-			if (this->buttons[i]->HitTest(g_Input->GetX(), g_Input->GetY()))
+		case STATE_PLAYING:
+			for (int i = 0; i < BUTTONS_NUMBER; i++)
 			{
-				this->p->removeColorFromStart(i+1);
+				if (this->buttons[i]->HitTest(g_Input->GetX(), g_Input->GetY()))
+				{
+					this->p->removeColorFromStart(i + 1);
+					break;
+				}
 			}
+			if (this->restartButton->HitTest(g_Input->GetX(), g_Input->GetY()))
+			{
+				this->p->revert();
+			}
+			break;
 		}
 	}
 }
@@ -113,6 +173,9 @@ void Field::Init(Puzzle *p)
 {
 	Scene::Init();
 	
+	// Set the state to playing
+	this->state = STATE_PLAYING;
+
 	// Save the pointer to the Puzzle
 	this->p = p;
 	
@@ -133,6 +196,8 @@ void Field::Init(Puzzle *p)
 
 	// Add the buttons to the scene.
 	this->updateButtons(true);
+
+	this->updateScore(true);
 }
 
 void Field::Exit()
@@ -153,10 +218,11 @@ void Field::Update(float deltaTime, float alphaMul)
 		return;
 	}
 
-	updateField();
-	updateButtons();
+	this->updateField();
+	this->updateButtons();
+	this->updateScore();
 
-	checkForInput();
+	this->checkForInput();
 
 	Scene::Update(deltaTime, alphaMul);
 }

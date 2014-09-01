@@ -62,6 +62,8 @@ Puzzle::Puzzle(int x, int y, int moves)
 {
 	initializeFieldArrays(x, y);
 	this->moves = moves;
+	this->movesOrig = moves;
+	this->turnsLeft = moves;
 	this->s = new char[64];
 }
 
@@ -111,6 +113,8 @@ void Puzzle::loadFromString(char *f)
 	skipNonDigits(&f, SEPARATOR_LENGTH);
 
 	this->moves = readNumber(&f, MAX_PARSED_MOVES_LENGTH);
+	this->movesOrig = this->moves;
+	this->turnsLeft = this->moves;
 	skipNonDigits(&f, SEPARATOR_LENGTH);
 
 	// initialize field arrays and load them from the string
@@ -134,6 +138,7 @@ void Puzzle::generateRandom(int seed)
 	this->start_X = this->size_X / 2;
 	this->start_Y = this->size_Y / 2;
 	field[this->getIndex(this->start_X, this->start_Y)] = 0;
+	fieldPrev[this->getIndex(this->start_X, this->start_Y)] = 0;
 }
 
 char* Puzzle::getAsString()
@@ -187,6 +192,11 @@ int Puzzle::getSizeY()
 int Puzzle::getIndex(int x, int y)
 {
 	return y * this->size_X + x;
+}
+
+int Puzzle::getTurnsLeft()
+{
+	return this->turnsLeft;
 }
 
 void Puzzle::printAsMatrix()
@@ -273,6 +283,8 @@ void Puzzle::revert()
 		for (int x = 0; x < this->size_X; x++)
 		{
 			this->field[this->getIndex(x, y)] = this->fieldPrev[this->getIndex(x, y)];
+			this->moves = this->movesOrig;
+			this->turnsLeft = this->movesOrig;
 		}
 	}
 }
@@ -282,34 +294,38 @@ void Puzzle::setField(int *f)
 	this->field = f;
 }
 
-void Puzzle::removeColor(int x, int y, int el, bool* visited)
+bool Puzzle::removeColor(int x, int y, int el, bool* visited)
 {
+	bool r = false;
 	if (this->isSolved())
 	{
-		return;
+		return r;
 	}
 	visited[this->getIndex(x, y)] = true;
 	if (this->getElement(x, y) == el)
 	{
+		r = true;
 		this->removeElement(x,y);
-		if (x + 1 < this->size_X && !visited[this->getIndex(x + 1,y)]) removeColor(x + 1, y, el, visited);
-		if (x - 1 >= 0 && !visited[this->getIndex(x - 1, y)]) removeColor(x - 1, y, el, visited);
-		if (y + 1 < this->size_Y && !visited[this->getIndex(x, y + 1)]) removeColor(x, y + 1, el, visited);
-		if (y - 1 >= 0 && !visited[this->getIndex(x, y - 1)]) removeColor(x, y - 1, el, visited);
+		if (x + 1 < this->size_X && !visited[this->getIndex(x + 1,y)]) r = removeColor(x + 1, y, el, visited) || r;
+		if (x - 1 >= 0 && !visited[this->getIndex(x - 1, y)]) r = removeColor(x - 1, y, el, visited) || r;
+		if (y + 1 < this->size_Y && !visited[this->getIndex(x, y + 1)]) r = removeColor(x, y + 1, el, visited) || r;
+		if (y - 1 >= 0 && !visited[this->getIndex(x, y - 1)]) r = removeColor(x, y - 1, el, visited) || r;
 	}
 	else if (this->getElement(x,y) == 0)
 	{
-		if (x + 1 < 7 && !visited[this->getIndex(x + 1, y)]) removeColor(x + 1, y, el, visited);
-		if (x - 1 >= 0 && !visited[this->getIndex(x - 1, y)]) removeColor(x - 1, y, el, visited);
-		if (y + 1 < 7 && !visited[this->getIndex(x, y + 1)]) removeColor(x, y + 1, el, visited);
-		if (y - 1 >= 0 && !visited[this->getIndex(x, y - 1)]) removeColor(x, y - 1, el, visited);
+		if (x + 1 < 7 && !visited[this->getIndex(x + 1, y)]) r = removeColor(x + 1, y, el, visited) || r;
+		if (x - 1 >= 0 && !visited[this->getIndex(x - 1, y)]) r = removeColor(x - 1, y, el, visited) || r;
+		if (y + 1 < 7 && !visited[this->getIndex(x, y + 1)]) r = removeColor(x, y + 1, el, visited) || r;
+		if (y - 1 >= 0 && !visited[this->getIndex(x, y - 1)]) r = removeColor(x, y - 1, el, visited) || r;
 	}
+	return r;
 }
 
 void Puzzle::removeColorFromStart(int el)
 {
 	bool v[64] = { false };
-	this->removeColor(this->start_X, this->start_Y, el, v);
+	if ( this->removeColor(this->start_X, this->start_Y, el, v) )
+		this->turnsLeft--;
 }
 
 Puzzle* Puzzle::createCopy(int moves, int currentMove)

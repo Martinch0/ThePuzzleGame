@@ -18,6 +18,9 @@ protected:
 	CIw2DImage* HowToPlayButton;
 	CIw2DImage* BackButton;
 	CIw2DImage** ElementButton;
+	CIw2DImage* RestartButton;
+	CIw2DImage* PauseButton;
+	CIw2DFont* Font;
 
 public:
 	CIw2DImage** getElements();
@@ -29,6 +32,9 @@ public:
 	CIw2DImage* getBackButton();
 	CIw2DImage* getElementButton(int p);
 	CIw2DImage** getElementButtons();
+	CIw2DImage* getRestartButton();
+	CIw2DImage* getPauseButton();
+	CIw2DFont* getFont();
 
 public:
 	Resources();

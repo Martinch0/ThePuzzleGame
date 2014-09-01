@@ -19,3 +19,6 @@
 [S3E]
 MemSize = 20000000
 DispFixRot=FixedPortrait
+
+[GX]
+DataCacheSize=80000

@@ -24,6 +24,11 @@ Resources::Resources()
 	ElementButton[1] = Iw2DCreateImage("textures/buttonrock.png");
 	ElementButton[2] = Iw2DCreateImage("textures/buttonmetal.png");
 	ElementButton[3] = Iw2DCreateImage("textures/buttonwood.png");
+
+	RestartButton = Iw2DCreateImage("textures/button_blue_repeat.png");
+	PauseButton = Iw2DCreateImage("textures/button_blue_pause.png");
+
+	Font = Iw2DCreateFont("fonts/Kingthings.gxfont");
 }
 
 Resources::~Resources()
@@ -43,6 +48,9 @@ Resources::~Resources()
 		delete ElementButton[i];
 	}
 	delete[] ElementButton;
+	delete RestartButton;
+	delete PauseButton;
+	delete Font;
 }
 
 CIw2DImage** Resources::getElements()
@@ -88,6 +96,21 @@ CIw2DImage* Resources::getElementButton(int p)
 CIw2DImage** Resources::getElementButtons()
 {
 	return ElementButton;
+}
+
+CIw2DImage* Resources::getRestartButton()
+{
+	return RestartButton;
+}
+
+CIw2DImage* Resources::getPauseButton()
+{
+	return PauseButton;
+}
+
+CIw2DFont* Resources::getFont()
+{
+	return Font;
 }
 
 //Global

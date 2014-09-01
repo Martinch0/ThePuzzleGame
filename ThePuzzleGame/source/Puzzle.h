@@ -22,6 +22,12 @@ private:
 	// The available moves left.
 	int moves = 0;
 
+	// Original number of moves.
+	int movesOrig = 0;
+
+	// Turns left
+	int turnsLeft;
+
 	// A String containing all the moves made to complete a puzzle.
 	char *s;
 
@@ -73,6 +79,9 @@ public:
 	// Returns the index of element in position XxY
 	int getIndex(int x, int y);
 
+	// Return the turns left
+	int getTurnsLeft();
+
 	// Print the field to the standard output as a matrix.
 	void printAsMatrix();
 
@@ -103,8 +112,8 @@ public:
 	// Changes the field to the given array.
 	void setField(int *f);
 
-	// Removes all elements that are "visible" from position XxY and are from type el.
-	void removeColor(int x, int y, int el, bool* visited);
+	// Removes all elements that are "visible" from position XxY and are from type el. Returns true if any element has been removed.
+	bool removeColor(int x, int y, int el, bool* visited);
 
 	// Removes all elements that are "visible" from the start position and are from type el. 
 	void removeColorFromStart(int el);
