@@ -116,20 +116,65 @@ void Field::updateScore(bool initial)
 	if (initial)
 	{
 		this->turnsLeft = new CLabel();
-		this->turnsLeft->m_X = 300 * scale;
-		this->turnsLeft->m_Y = 10 * scale;
-		this->turnsLeft->m_H = 30 * scale;
-		this->turnsLeft->m_W = 500 * scale;
+		this->turnsLeft->m_X = (ORIG_WIDTH - 300) * scale;
+		this->turnsLeft->m_Y = 20 * scale;
+		this->turnsLeft->m_H = 30;
+		this->turnsLeft->m_W = 250;
 		this->turnsLeft->m_AlignHor = IW_2D_FONT_ALIGN_LEFT;
 		this->turnsLeft->m_AlignVer = IW_2D_FONT_ALIGN_TOP;
 		this->turnsLeft->m_Font = g_pResources->getFont();
 		this->turnsLeft->m_ScaleX = scale;
 		this->turnsLeft->m_ScaleY = scale;
 		AddChild(this->turnsLeft);
+
+		this->gameOver = new CLabel();
+		this->gameOver->m_X = ((ORIG_WIDTH - 300) / 2) * scale;
+		this->gameOver->m_Y = 350 * scale;
+		this->gameOver->m_H = 30;
+		this->gameOver->m_W = 300;
+		this->gameOver->m_AlignHor = IW_2D_FONT_ALIGN_CENTRE;
+		this->gameOver->m_AlignVer = IW_2D_FONT_ALIGN_TOP;
+		this->gameOver->m_Font = g_pResources->getFont();
+		this->gameOver->m_ScaleX = scale;
+		this->gameOver->m_ScaleY = scale;
+		this->gameOver->m_IsVisible = false;
+		AddChild(this->gameOver);
 	}
 	char str[16];
 	snprintf(str, 16, "Turns left: %d", this->p->getTurnsLeft());
 	this->turnsLeft->m_Text = str;
+
+	if (this->state == STATE_LOST)
+	{
+		this->gameOver->m_Text = "You Lost";
+	}
+	else if (this->state == STATE_WON)
+	{
+		this->gameOver->m_Text = "You Won";
+	}
+	else
+	{
+		this->gameOver->m_Text = "";
+	}
+}
+
+void Field::updateGameState()
+{
+	if (this->state != STATE_WON || this->state != STATE_LOST)
+	{
+		bool solved = this->p->isSolved();
+		int turnsLeft = this->p->getTurnsLeft();
+		if (solved && turnsLeft >= 0)
+		{
+			this->gameOver->m_IsVisible = true;
+			this->state = STATE_WON;
+		}
+		else if (!solved && turnsLeft <= 0)
+		{
+			this->gameOver->m_IsVisible = true;
+			this->state = STATE_LOST;
+		}
+	}
 }
 
 void Field::checkForInput()
@@ -153,11 +198,25 @@ void Field::checkForInput()
 			}
 			if (this->restartButton->HitTest(g_Input->GetX(), g_Input->GetY()))
 			{
-				this->p->revert();
+				this->reset();
+			}
+			break;
+		case STATE_LOST:
+		case STATE_WON:
+			if (this->restartButton->HitTest(g_Input->GetX(), g_Input->GetY()))
+			{
+				this->reset();
 			}
 			break;
 		}
 	}
+}
+
+void Field::reset()
+{
+	this->gameOver->m_IsVisible = false;
+	this->p->revert();
+	this->state = STATE_PLAYING;
 }
 
 Field::Field()
@@ -217,7 +276,7 @@ void Field::Update(float deltaTime, float alphaMul)
 	{
 		return;
 	}
-
+	this->updateGameState();
 	this->updateField();
 	this->updateButtons();
 	this->updateScore();

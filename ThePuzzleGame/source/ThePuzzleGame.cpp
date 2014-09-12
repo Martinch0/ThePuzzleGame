@@ -38,7 +38,7 @@ int main()
 	Field* field = new Field();
 	field->SetName("field");
 	// Creates random puzzle
-	Puzzle *p = new Puzzle(7, 7, 10);
+	Puzzle *p = new Puzzle(7, 7, 7);
 	p->generateRandom(1);
 	field->Init(p);
 	g_pSceneManager->Add(field);

@@ -23,6 +23,7 @@ private:
 	CSprite *pauseButton;
 	CSprite *restartButton;
 	CLabel *turnsLeft;
+	CLabel *gameOver;
 	Puzzle *p; // The current Puzzle assigned to the field.
 
 	// Synchronizes the field in the Puzzle with the field of Sprites.
@@ -40,8 +41,14 @@ private:
 	// Creates and updates the score label
 	void updateScore(bool initial = false);
 
+	// Updates the game state
+	void updateGameState();
+
 	// Handles all input for the current scene.
 	void checkForInput();
+
+	// Reset the field
+	void reset();
 public:
 	Field();
 	~Field();
